@@ -1,0 +1,507 @@
+/* Custom CSS untuk Kuis Siklus Air */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Set font family untuk seluruh halaman */
+* {
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* Background watermark logo UNRAM di tengah halaman */
+body {
+    position: relative;
+    background-color: var(--bg, #f0f4ff); /* warna biru muda seperti sebelumnya */
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;   /* atur ukuran sesuai kebutuhan */
+    height: 500px;
+    background: url('assets/images/logo-unram.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0.12;   /* transparan lembut */
+    z-index: -1;     /* di belakang semua elemen */
+    pointer-events: none; /* supaya tidak menghalangi klik input */
+}
+
+/* Pastikan semua konten berada di atas watermark */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Animasi untuk option buttons */
+.option-btn {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+}
+
+/* Global page fade-in (disabled to avoid blank screen if AOS not applied) */
+
+/* Buttons hover/tap effects */
+.btn-anim {
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+.btn-anim:hover { transform: scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,.08); }
+.btn-anim:active { transform: scale(0.95); }
+
+.option-btn.selected {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+.option-btn.correct {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+}
+
+.option-btn.incorrect {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+}
+
+/* Animasi untuk progress bar */
+#progressBar {
+    transition: width 0.5s ease-in-out;
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+/* Initial width class for progress bar */
+.progress-initial {
+    width: 5%;
+}
+
+/* Animasi untuk score display */
+.score-animation {
+    animation: scoreCount 1.5s ease-out;
+}
+
+@keyframes scoreCount {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animasi untuk leaderboard entries */
+.leaderboard-entry {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Review section helper styles */
+.review-wrapper {
+    background: #E3F2FD;
+}
+
+/* Reusable slideIn for review cards */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover effect untuk leaderboard entries */
+.leaderboard-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styling untuk form inputs */
+input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+}
+
+/* Styling untuk question counter */
+.question-counter {
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+}
+
+/* Hover effects untuk action buttons */
+.action-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+    left: 100%;
+}
+
+/* Custom styling untuk leaderboard ranks */
+.rank-1 {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #92400e;
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
+    color: #374151;
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #92400e;
+}
+
+/* Animasi untuk loading spinner */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Custom styling untuk notification toast */
+.toast-success {
+    background-color: #10b981;
+}
+
+.toast-error {
+    background-color: #ef4444;
+}
+
+.toast-info {
+    background-color: #3b82f6;
+}
+
+/* Animasi untuk toast notification */
+.toast-enter {
+    animation: toastSlideIn 0.3s ease-out;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Styling untuk disabled buttons */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Custom gradient untuk background */
+.bg-gradient-quiz {
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+/* Logo di header */
+.header-logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    background-image: url('assets/images/logo-unram.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10;
+}
+
+/* Responsive design untuk mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .text-4xl {
+        font-size: 2rem;
+    }
+    
+    .text-3xl {
+        font-size: 1.875rem;
+    }
+    
+    .p-8 {
+        padding: 1.5rem;
+    }
+    
+    .space-x-4 > * + * {
+        margin-left: 0.5rem;
+    }
+    
+    .space-y-4 > * + * {
+        margin-top: 0.5rem;
+    }
+    
+    /* Watermark logo responsif untuk mobile */
+    body::before {
+        width: 300px;
+        height: 300px;
+        opacity: 0.10;
+    }
+    
+    .header-logo {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        right: 15px;
+    }
+
+    /* Quiz option buttons spacing and touch targets */
+    .option-btn { padding: 14px; font-size: 15px; }
+    #answerOptions { gap: 10px; }
+
+    /* Buttons full width on small screens */
+    #nextBtn, #prevBtn, #submitBtn, #retakeBtn, #leaderboardBtn, #viewCertBtn, #reviewBtn,
+    #backHome, #viewCertificate { width: 100%; margin-left: 0 !important; }
+
+    /* Certificate adjustments */
+    .certificate { width: 94%; padding: 20px; }
+    .cert-logo { width: 80px; }
+    .certificate h1 { font-size: 18px; }
+    .certificate h2 { font-size: 16px; }
+}
+
+/* Responsive untuk tablet */
+@media (max-width: 1024px) and (min-width: 769px) {
+    body::before {
+        width: 400px;
+        height: 400px;
+        opacity: 0.11;
+    }
+}
+
+/* Styling khusus untuk kuis siklus air */
+.quiz-title {
+    background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.water-drop {
+    animation: waterDrop 2s ease-in-out infinite;
+}
+
+@keyframes waterDrop {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Styling untuk soal literasi */
+.literasi-indicator {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+}
+
+/* Styling untuk soal umum */
+.umum-indicator {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+/* Custom shadow untuk cards */
+.card-shadow {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-shadow:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Gradient text untuk score */
+.score-gradient {
+    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Pulse animation untuk interactive elements */
+.pulse-animation {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .8;
+    }
+}
+
+/* Bounce animation untuk buttons */
+.bounce-on-click:active {
+    transform: scale(0.95);
+}
+
+/* Custom border radius untuk modern look */
+.modern-radius {
+    border-radius: 1rem;
+}
+
+.modern-radius-lg {
+    border-radius: 1.5rem;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Custom focus states */
+.focus-ring:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Smooth transitions untuk semua interactive elements */
+button, input, select, .option-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom styling untuk progress indicators */
+.progress-indicator {
+    background: linear-gradient(90deg, #3b82f6 0%, #06b6d4 50%, #10b981 100%);
+    background-size: 200% 100%;
+    animation: progressShimmer 2s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Custom styling untuk form elements */
+.form-input {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.form-input:focus {
+    background: rgba(255, 255, 255, 1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Custom styling untuk quiz container */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Theme variables */
+:root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --muted: #6b7280;
+}
+.dark {
+    --bg: #0b1220;
+    --card: #0f172a;
+    --muted: #94a3b8;
+}
+
+/* Water-themed animations */
+.water-wave {
+    animation: wave 3s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
