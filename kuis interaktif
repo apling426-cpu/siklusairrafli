@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif Siklus Air</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style-siklus-air.css">
+    <!-- AOS Animations (SRI removed to avoid integrity mismatch blocking) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-cyan-100 min-h-screen font-poppins" data-aos-easing="ease-out" data-aos-duration="600">
+    <div class="container mx-auto px-4 py-8 max-w-4xl" data-aos="fade-up">
+        
+        <!-- Header -->
+        <header class="text-center mb-8 relative" data-aos="fade-down" data-aos-duration="600">
+            <!-- Logo UNRAM di header -->
+            <div class="header-logo"></div>
+            <h1 class="text-4xl font-bold text-blue-800 mb-2">💧 Kuis Interaktif Siklus Air</h1>
+            <p class="text-lg text-blue-600 mb-2">Muhammad rafli firdaus Nim E1E02310257</p>
+            <p class="text-sm text-gray-500">Universitas Mataram</p>
+        </header>
+
+        <!-- Form Input User -->
+        <div id="userForm" class="bg-white rounded-2xl shadow-xl p-8 mb-6" data-aos="fade-up">
+            <h2 class="text-2xl font-semibold text-blue-800 mb-6 text-center">Informasi Siswa</h2>
+            <form id="userInfoForm" class="space-y-6">
+                <div>
+                    <label for="userName" class="block text-sm font-medium text-blue-700 mb-2">Nama Lengkap</label>
+                    <input type="text" id="userName" required 
+                           class="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                           placeholder="Masukkan nama lengkap Anda">
+                </div>
+                <div>
+                    <label for="userClass" class="block text-sm font-medium text-blue-700 mb-2">Kelas</label>
+                    <select id="userClass" required 
+                            class="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                        <option value="">Pilih Kelas</option>
+                        <option value="4">Kelas 4 SD (20 soal)</option>
+                        <option value="5">Kelas 5 SD (30 soal)</option>
+                        <option value="6">Kelas 6 SD (40 soal)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="userSchool" class="block text-sm font-medium text-blue-700 mb-2">Asal Sekolah</label>
+                    <input type="text" id="userSchool" required 
+                           class="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                           placeholder="Masukkan nama sekolah Anda">
+                </div>
+                <button type="submit" 
+                        class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-4 px-6 rounded-xl hover:from-blue-600 hover:to-cyan-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium text-lg">
+                    🌊 Mulai Kuis Siklus Air
+                </button>
+            </form>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progressSection" class="hidden mb-6" data-aos="fade-up">
+            <div class="bg-white rounded-xl shadow-lg p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-blue-700">Progress Kuis</span>
+                    <span id="progressText" class="text-sm font-medium text-blue-600">1 dari 20</span>
+                </div>
+                <div class="w-full bg-blue-100 rounded-full h-3">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-cyan-500 h-3 rounded-full transition-all duration-300 progress-initial"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="hidden" data-aos="fade-up">
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+                <!-- Question Counter -->
+                <div class="text-center mb-6">
+                    <span id="questionCounter" class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">Soal 1</span>
+                </div>
+
+                <!-- Question -->
+                <div class="mb-8">
+                    <h3 id="questionText" class="text-xl font-semibold text-gray-800 mb-4 leading-relaxed"></h3>
+                    
+                    <!-- Question Type Indicator -->
+                    <div id="questionType" class="mb-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Soal Umum</span>
+                    </div>
+                </div>
+
+                <!-- Answer Options -->
+                <div id="answerOptions" class="space-y-3 mb-8">
+                    <!-- Options will be generated by JavaScript -->
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between">
+                    <button id="prevBtn" class="bg-gray-400 text-white py-3 px-6 rounded-xl hover:bg-gray-500 transition duration-200 hidden">
+                        ⬅️ Sebelumnya
+                    </button>
+                    <button id="nextBtn" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-xl hover:from-blue-600 hover:to-cyan-600 transition duration-200 ml-auto">
+                        Selanjutnya ➡️
+                    </button>
+                    <button id="submitBtn" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-6 rounded-xl hover:from-green-600 hover:to-emerald-600 transition duration-200 hidden">
+                        ✅ Selesai
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="resultsContainer" class="hidden" data-aos="zoom-in">
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-6 text-center">
+                <h2 class="text-3xl font-bold text-blue-800 mb-4">🎉 Hasil Kuis Siklus Air</h2>
+                <div class="mb-6">
+                    <div class="text-6xl font-bold text-blue-600 mb-2" id="finalScore">0</div>
+                    <div class="text-xl text-gray-600 mb-4" id="scoreText">Skor kamu: 0 dari 100</div>
+                    <div class="text-lg text-blue-700 mb-4" id="scorePercentage">0%</div>
+                </div>
+                
+                <div class="mb-6">
+                    <div id="scoreMessage" class="text-lg font-medium text-gray-700"></div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-4">
+                    <button id="retakeBtn" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-8 rounded-xl hover:from-blue-600 hover:to-cyan-600 transition duration-200 mr-4">
+                        🔄 Ulang Kuis
+                    </button>
+                    <button id="leaderboardBtn" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-8 rounded-xl hover:from-green-600 hover:to-emerald-600 transition duration-200">
+                        🏆 Lihat Leaderboard
+                    </button>
+                    <div class="flex items-center justify-center gap-3 mt-4">
+                      <button id="reviewBtn" class="bg-teal-600 text-white py-3 px-6 rounded-xl hover:bg-teal-700 transition duration-200">🔍 Lihat Review Kuis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Section -->
+        <div id="review-section" class="hidden" data-aos="fade-up">
+          <div class="bg-white/90 rounded-2xl shadow-xl p-6 mb-6 review-wrapper">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">🔎 Review Kuis Siklus Air</h2>
+            <div id="review-container" class="space-y-4"></div>
+            <div class="flex items-center gap-3 mt-6">
+              <button id="backHome" class="bg-gray-500 text-white py-2 px-4 rounded-xl hover:bg-gray-600 transition">🏠 Kembali ke Beranda</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Container -->
+        <div id="leaderboardContainer" class="hidden" data-aos="fade-up">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-blue-800">🏆 Leaderboard Siklus Air</h2>
+                    <button id="closeLeaderboardBtn" class="bg-gray-400 text-white py-2 px-4 rounded-xl hover:bg-gray-500 transition duration-200">
+                        ✖️ Tutup
+                    </button>
+                </div>
+                
+                <div id="leaderboardContent">
+                    <div class="text-center py-8">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                        <p class="text-gray-600 mt-2">Memuat leaderboard...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-6 text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p class="text-gray-700">Mengirim data ke server...</p>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="hidden fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-50" data-aos="fade-left">
+            <span id="toastMessage"></span>
+        </div>
+
+        
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="questions.js"></script>
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        if (window.AOS && AOS.init) {
+          AOS.init({ duration: 600, once: true, easing: 'ease-out' });
+        }
+      });
+    </script>
+    <script src="script-siklus-air.js"></script>
+</body>
+</html>
